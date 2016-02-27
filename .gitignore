@@ -1,0 +1,6 @@
+npm-debug.log
+node_modules
+aiml
+
+# Use .gitkeep files to track empty folders
+!.gitkeep

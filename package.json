@@ -1,0 +1,16 @@
+{
+  "name": "surly2",
+  "version": "1.0.0",
+  "description": "An AIML interpreter",
+  "main": "cli.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "MrChimp <chimpytk@gmail.com> (http://deviouschimp.co.uk/)",
+  "license": "ISC",
+  "dependencies": {
+    "fs": "0.0.2",
+    "libxmljs": "^0.17.1",
+    "rc": "^1.1.6"
+  }
+}
