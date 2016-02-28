@@ -22,38 +22,41 @@ module.exports = class BaseNode {
       node_type = child_nodes[i].name().toLowerCase();
 
       switch (node_type) {
-        case 'text':
-          this.children.push(new TextNode(child_nodes[i], this.environment));
-          break;
-        case 'br':
-          this.children.push(new TextNode('\n', this.environment));
-          break;
         case 'a': // Treat A tags as plain text. @todo
           this.children.push(new TextNode(child_nodes[i], this.environment));
-          break;
-        case 'srai':
-          this.children.push(new Srai(child_nodes[i], this.environment));
-          break;
-        case 'random':
-          this.children.push(new Random(child_nodes[i], this.environment));
-          break;
-        case 'li':
-          this.children.push(new Li(child_nodes[i], this.environment));
           break;
         case 'bot':
           this.children.push(new Bot(child_nodes[i], this.environment));
           break;
+        case 'br':
+          this.children.push(new TextNode('\n', this.environment));
+          break;
+        case 'date':
+          this.children.push(new DateNode('\n', this.environment));
+          break;
         case 'get':
           this.children.push(new Get(child_nodes[i], this.environment));
+          break;
+        case 'li':
+          this.children.push(new Li(child_nodes[i], this.environment));
+          break;
+        case 'random':
+          this.children.push(new Random(child_nodes[i], this.environment));
           break;
         case 'set':
           this.children.push(new SetNode(child_nodes[i], this.environment));
           break;
+        case 'size':
+          this.children.push(new Size(child_nodes[i], this.environment));
+          break;
+        case 'srai':
+          this.children.push(new Srai(child_nodes[i], this.environment));
+          break;
         case 'star':
           this.children.push(new Star(child_nodes[i], this.environment));
           break;
-        case 'size':
-          this.children.push(new Size(child_nodes[i], this.environment));
+        case 'text':
+          this.children.push(new TextNode(child_nodes[i], this.environment));
           break;
         default:
           this.children.push(new TextNode('[NOT IMPLEMENTED: ' + node_type + ']', this.environment));
@@ -88,6 +91,7 @@ module.exports = class BaseNode {
 const Li = require('./Template/Li');
 const Bot = require('./Template/Bot');
 const Get = require('./Template/Get');
+const DateNode = require('./Template/DateNode');
 const SetNode = require('./Template/Set');
 const TextNode = require('./Template/Text');
 const Srai = require('./Template/Srai');
