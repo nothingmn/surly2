@@ -117,6 +117,10 @@ module.exports = class Environment {
 
     return this.stored_variables[name];
   }
+
+  countCategories () {
+    return this.aiml.categories.length;
+  }
 };
 
 var Stack = require('./stack');

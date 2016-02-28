@@ -16,6 +16,7 @@ module.exports = class Surly {
       environment: this.environment
     });
     this.aiml.loadDir(options.brain);
+    this.environment.aiml = this.aiml; // @todo this is getting circular. Hmmm.
   }
 
   /**

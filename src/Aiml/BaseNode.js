@@ -23,13 +23,13 @@ module.exports = class BaseNode {
 
       switch (node_type) {
         case 'text':
-          this.children.push(new Text(child_nodes[i], this.environment));
+          this.children.push(new TextNode(child_nodes[i], this.environment));
           break;
         case 'br':
-          this.children.push(new Text('\n', this.environment));
+          this.children.push(new TextNode('\n', this.environment));
           break;
         case 'a': // Treat A tags as plain text. @todo
-          this.children.push(new Text(child_nodes[i], this.environment));
+          this.children.push(new TextNode(child_nodes[i], this.environment));
           break;
         case 'srai':
           this.children.push(new Srai(child_nodes[i], this.environment));
@@ -47,13 +47,16 @@ module.exports = class BaseNode {
           this.children.push(new Get(child_nodes[i], this.environment));
           break;
         case 'set':
-          this.children.push(new Set(child_nodes[i], this.environment));
+          this.children.push(new SetNode(child_nodes[i], this.environment));
           break;
         case 'star':
           this.children.push(new Star(child_nodes[i], this.environment));
           break;
+        case 'size':
+          this.children.push(new Size(child_nodes[i], this.environment));
+          break;
         default:
-          this.children.push(new Text('[NOT IMPLEMENTED: ' + node_type + ']', this.environment));
+          this.children.push(new TextNode('[NOT IMPLEMENTED: ' + node_type + ']', this.environment));
       }
     }
   }
@@ -85,8 +88,9 @@ module.exports = class BaseNode {
 const Li = require('./Template/Li');
 const Bot = require('./Template/Bot');
 const Get = require('./Template/Get');
-const Set = require('./Template/Set');
-const Text = require('./Template/Text');
+const SetNode = require('./Template/Set');
+const TextNode = require('./Template/Text');
 const Srai = require('./Template/Srai');
 const Star = require('./Template/Star');
+const Size = require('./Template/Size');
 const Random = require('./Template/Random');

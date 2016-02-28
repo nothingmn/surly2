@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 var pkg = require('./package.json');
-var Surly = require('./src/surly.js');
+var Surly = require('./src/Surly.js');
 var conf = require('rc')('surly', {
     brain: '',      b: '',
     help: false,
