@@ -1,17 +1,15 @@
 "use strict";
 
-var Stack = require('../stack');
-
 /**
  * AIML pattern node
  * @param {Node} pattern  libxmljs representation of AIML pattern node
  */
 module.exports = class Pattern {
-  constructor (pattern) {
+  constructor (pattern, environment) {
+    this.environment = environment;
+    this.wildcard_regex = ' ([A-Z|0-9|\\s]*[A-Z|0-9|-]*[A-Z|0-9]*[!|.|?|\\s]*)';
     this.text_pattern = pattern.text();
     this.regex = this.patternToRegex(this.text_pattern);
-    this.wildcard_regex = ' ([A-Z|0-9|\\s]*[A-Z|0-9|-]*[A-Z|0-9]*[!|.|?|\\s]*)';
-    this.wildcard_stack = new Stack(10);
   }
 
   /**
@@ -35,8 +33,8 @@ module.exports = class Pattern {
     var matches = sentence.match(this.regex);
 
     if (matches &&
-      (matches[0].length >= sentence.length || this.regex.indexOf(this.wildCardRegex) > -1)) {
-        this.wildcard_stack.push(this.getWildCardValues(sentence, this));
+      (matches[0].length >= sentence.length || this.regex.indexOf(this.wildcard_regex) > -1)) {
+        this.environment.wildcard_stack.push(this.getWildCardValues(sentence, this));
       return true;
     }
 
@@ -82,7 +80,7 @@ module.exports = class Pattern {
 
     if (matches &&
       (matches[0].length >= sentence.length || this.text_pattern.indexOf(this.wildcard_regex) > -1)) {
-        this.wildcard_stack.push(this.getWildCardValues(sentence));
+        this.environment.wildcard_stack.push(this.getWildCardValues(sentence));
       return true;
     }
 
@@ -93,7 +91,7 @@ module.exports = class Pattern {
     var replace_array = this.text_pattern.split('*');
 
     if (replace_array.length < 2) {
-      return this.wildcard_stack.getLast();
+      return this.environment.wildcard_stack.getLast();
     }
 
     for (var i = 0; i < replace_array.length; i++) {
@@ -107,7 +105,7 @@ module.exports = class Pattern {
     var chunk = '';
 
     for (i = 0; i < sentence.length; i++) {
-      chunk.sentence[i].trim();
+      chunk = sentence[i].trim();
 
       if (chunk === '') continue;
 

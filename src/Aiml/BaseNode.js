@@ -43,6 +43,15 @@ module.exports = class BaseNode {
         case 'bot':
           this.children.push(new Bot(child_nodes[i], this.environment));
           break;
+        case 'get':
+          this.children.push(new Get(child_nodes[i], this.environment));
+          break;
+        case 'set':
+          this.children.push(new Set(child_nodes[i], this.environment));
+          break;
+        case 'star':
+          this.children.push(new Star(child_nodes[i], this.environment));
+          break;
         default:
           this.children.push(new Text('[NOT IMPLEMENTED: ' + node_type + ']', this.environment));
       }
@@ -50,10 +59,19 @@ module.exports = class BaseNode {
   }
 
   /**
-   * Return the node and any children as text
+   * Render tag as text. To be overridden where necessary.
    * @return {String}
    */
   getText() {
+    return this.evaluateChildren();
+  }
+
+
+  /**
+  * Evaluate child nodes as text. For use in child class getText methods.
+  * @return {String}
+  */
+  evaluateChildren () {
     var output = '';
 
     for (var i = 0; i < this.children.length; i++) {
@@ -66,6 +84,9 @@ module.exports = class BaseNode {
 
 const Li = require('./Template/Li');
 const Bot = require('./Template/Bot');
+const Get = require('./Template/Get');
+const Set = require('./Template/Set');
 const Text = require('./Template/Text');
 const Srai = require('./Template/Srai');
+const Star = require('./Template/Star');
 const Random = require('./Template/Random');

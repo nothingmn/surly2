@@ -28,7 +28,7 @@ module.exports = class Category {
       throw 'Category should have exactly one TEMPLATE.';
     }
 
-    this.pattern = new Pattern(patterns[0]);
+    this.pattern = new Pattern(patterns[0], environment);
     this.pattern.category = this;
     this.template = new Template(templates[0], environment);
     this.template.category = this;

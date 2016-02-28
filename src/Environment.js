@@ -80,6 +80,7 @@ module.exports = class Environment {
       "website": "https://github.com/mrchimp/surly2"
     };
     this.stored_variables = {};
+    this.wildcard_stack = new Stack(10);
   }
 
   /**
@@ -89,7 +90,7 @@ module.exports = class Environment {
    */
   getBot (attribute) {
     if (typeof this.bot_attributes[attribute] === 'undefined') {
-      return 'Unset attribute.'; // @todo something else
+      return '';
     }
 
     return this.bot_attributes[attribute];
@@ -111,9 +112,11 @@ module.exports = class Environment {
    */
   getVariable (name) {
     if (typeof this.stored_variables[name] === 'undefined') {
-      return 'Unset variable'; // @todo something else
+      return '';
     }
 
     return this.stored_variables[name];
   }
 };
+
+var Stack = require('./stack');
