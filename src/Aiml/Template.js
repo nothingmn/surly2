@@ -1,5 +1,6 @@
+"use strict";
 
-var Text = require('./Template/Text');
+const BaseNode = require('./BaseNode');
 
 /**
  * AIML template node. Child nodes may include one or more of the following:
@@ -53,33 +54,6 @@ var Text = require('./Template/Text');
  *
  * @param {Node} template libxmljs representation of AIML template node
  */
-function Template (template) {
-  var child_nodes = template.childNodes(),
-  node_type;
+module.exports = class Template extends BaseNode {
 
-  this.children = [];
-
-  for (var i = 0; i < child_nodes.length; i++) {
-    node_type = child_nodes[i].name().toLowerCase();
-
-    switch (node_type) {
-      case 'text':
-        this.children.push(new Text(child_nodes[i]));
-        break;
-      default:
-        this.children.push(new Text('[NOT IMPLEMENTED]'));
-    }
-  }
-}
-
-Template.prototype.getText = function () {
-  var output = [];
-
-  for (var i = 0; i < this.children.length; i++) {
-    output.push(this.children[i].getText());
-  }
-
-  return output.join(' ');
 };
-
-module.exports = Template;
