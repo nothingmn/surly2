@@ -54,6 +54,4 @@ const BaseNode = require('./BaseNode');
  *
  * @param {Node} template libxmljs representation of AIML template node
  */
-module.exports = class Template extends BaseNode {
-
-};
+module.exports = class Template extends BaseNode {};

@@ -15,7 +15,7 @@ module.exports = class Category {
    * Constructor method
    * @param  {Node} node Xmllibjs node object
    */
-  constructor (category) {
+  constructor (category, environment) {
     var patterns = category.find('pattern');
     var templates = category.find('template');
     var thats = category.find('that');
@@ -30,7 +30,7 @@ module.exports = class Category {
 
     this.pattern = new Pattern(patterns[0]);
     this.pattern.category = this;
-    this.template = new Template(templates[0]);
+    this.template = new Template(templates[0], environment);
     this.template.category = this;
 
     this.that = '';

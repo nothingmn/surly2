@@ -1,3 +1,4 @@
+"use strict";
 
 /**
  * Stack for holding stuff.
@@ -11,101 +12,90 @@
  * Constructor
  * @param {integer} max_size Number of commands to store
  */
-var Stack = function(max_size) {
-  "use strict";
+module.exports = class Stack {
+  constructor (max_size) {
+    this.arr = []; // This is a fairly meaningless name but
+    // makes it sound like this function was
+    // written by a pirate.  I'm keeping it.
 
-  var arr = []; // This is a fairly meaningless name but
-                // makes it sound like this function was
-                // written by a pirate.  I'm keeping it.
+    if (typeof max_size !== 'number') {
+      throw 'Stack error: max_size should be a number.';
+    }
 
-  if (typeof max_size !== 'number') {
-    throw 'Stack error: max_size should be a number.';
+    this.max_size = max_size;
   }
 
   /**
-   * Push an item to the array
-   * @param  {string} item Item to append to stack
-   */
-  function push(item) {
-    arr.push(item);
+  * Push an item to the array
+  * @param  {string} item Item to append to stack
+  */
+  push (item) {
+    this.arr.push(item);
 
     // crop off excess
-    while (arr.length > max_size) {
-      arr.shift();
+    while (this.arr.length > this.max_size) {
+      this.arr.shift();
     }
   }
 
   /**
-   * Get an item by it's index.
-   * @return {Integer}
-   */
-  function get(index) {
+  * Get an item by it's index.
+  * @return {Integer}
+  */
+  get (index) {
     if (index < 1) {
-      var item = arr.slice(index)[0];
+      var item = this.arr.slice(index)[0];
 
       return item || false;
     }
 
-    if (typeof arr[index] === 'undefined') {
+    if (typeof this.arr[index] === 'undefined') {
       return false;
     }
 
-    return arr[index];
+    return this.arr[index];
   }
 
   /**
-   * Return the last item on the stack.
-   * @return {Various} Item
-   */
-  function getLast() {
+  * Return the last item on the stack.
+  * @return {Various} Item
+  */
+  getLast () {
     if (this.isEmpty()) {
       return false;
     }
 
-    return arr[arr.length - 1];
+    return this.arr[this.arr.length - 1];
   }
 
   /**
-   * Is stack empty
-   * @return {Boolean} True if stack is empty
-   */
-  function isEmpty() {
-    return (arr.length === 0);
+  * Is stack empty
+  * @return {Boolean} True if stack is empty
+  */
+  isEmpty () {
+    return (this.arr.length === 0);
   }
 
   /**
-   * Empty array and remove from localstorage
-   */
-  function empty() {
-    arr = undefined;
-    reset();
+  * Empty array and remove from localstorage
+  */
+  empty () {
+    this.arr = [];
   }
 
   /**
-   * Get entire stack array
-   * @return {array} The stack array
-   */
-  function getArr() {
-    return arr;
+  * Get entire stack array
+  * @return {array} The stack array
+  */
+  getArr () {
+    return this.arr;
   }
 
   /**
-   * Get size of the stack
-   * @return {Integer} Size of stack
-   */
-  function getSize(){
-    return arr.size;
+  * Get size of the stack
+  * @return {Integer} Size of stack
+  */
+  getSize () {
+    return this.arr.size;
   }
-
-  return {
-    push: push,
-    isEmpty: isEmpty,
-    empty: empty,
-    getArr: getArr,
-    getSize: getSize,
-    get: get,
-    getLast: getLast
-  };
 };
-
-module.exports = Stack;
