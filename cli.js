@@ -31,11 +31,7 @@ if (options.version) {
 }
 
 var bot = new Surly({
-  brain: options.brain,
-  respond: function (response) {
-    console.log('Surly: ' + response);
-    process.stdout.write(prompt);
-  }
+  brain: options.brain
 });
 
 console.log('Surly: Hello! Type quit to quit or /help for unhelpful help.');
@@ -49,5 +45,8 @@ process.stdin.addListener('data', function (d) {
 		process.exit(0);
 	}
 
-  bot.talk(sentence);
+  bot.talk(function (err, response) {
+    console.log('Surly: ' + response);
+    process.stdout.write(prompt);
+  }, sentence);
 });

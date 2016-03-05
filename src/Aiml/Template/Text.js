@@ -14,19 +14,24 @@ module.exports = class Text {
    */
   constructor (node) {
     this.children = [];
+    this.type = 'text';
 
     if (typeof node === 'string') {
-       this.content = node;
+      this.content = node;
     } else {
       this.content = node.toString();
     }
+  }
+
+  getType() {
+    return this.type;
   }
 
   /**
    * Return the node and any children as text
    * @return {String}
    */
-  getText () {
-    return this.content;
+  getText (callback) { // function (err, output)
+    callback(null, this.content);
   }
 };

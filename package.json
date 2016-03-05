@@ -9,6 +9,7 @@
   "author": "MrChimp <chimpytk@gmail.com> (http://deviouschimp.co.uk/)",
   "license": "ISC",
   "dependencies": {
+    "async": "^1.5.2",
     "fs": "0.0.2",
     "libxmljs": "^0.17.1",
     "rc": "^1.1.6"

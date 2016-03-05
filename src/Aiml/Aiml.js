@@ -15,7 +15,7 @@ module.exports = class Aiml {
     * The current topic
     */
     this.topic = '*';
-    this.environment = options.environment;
+    this.surly = options.surly;
     this.wipe();
     this.categories = [];
     this.previous_response = '';
@@ -41,7 +41,7 @@ module.exports = class Aiml {
 
     for (var i = 0; i < categories.length; i++) {
       this.debug('Found category.', categories[i]);
-      this.categories.push(new Category(categories[i], this.environment));
+      this.categories.push(new Category(categories[i], this.surly));
     }
   }
 

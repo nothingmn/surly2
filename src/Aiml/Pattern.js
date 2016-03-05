@@ -5,8 +5,8 @@
  * @param {Node} pattern  libxmljs representation of AIML pattern node
  */
 module.exports = class Pattern {
-  constructor (pattern, environment) {
-    this.environment = environment;
+  constructor (pattern, surly) {
+    this.surly = surly;
     this.wildcard_regex = ' ([A-Z|0-9|\\s]*[A-Z|0-9|-]*[A-Z|0-9]*[!|.|?|\\s]*)';
     this.text_pattern = pattern.text();
     this.regex = this.patternToRegex(this.text_pattern);
@@ -34,7 +34,7 @@ module.exports = class Pattern {
 
     if (matches &&
       (matches[0].length >= sentence.length || this.regex.indexOf(this.wildcard_regex) > -1)) {
-        this.environment.wildcard_stack.push(this.getWildCardValues(sentence, this));
+        this.surly.environment.wildcard_stack.push(this.getWildCardValues(sentence, this));
       return true;
     }
 
@@ -80,7 +80,7 @@ module.exports = class Pattern {
 
     if (matches &&
       (matches[0].length >= sentence.length || this.text_pattern.indexOf(this.wildcard_regex) > -1)) {
-        this.environment.wildcard_stack.push(this.getWildCardValues(sentence));
+        this.surly.environment.wildcard_stack.push(this.getWildCardValues(sentence));
       return true;
     }
 
@@ -91,7 +91,7 @@ module.exports = class Pattern {
     var replace_array = this.text_pattern.split('*');
 
     if (replace_array.length < 2) {
-      return this.environment.wildcard_stack.getLast();
+      return this.surly.environment.wildcard_stack.getLast();
     }
 
     for (var i = 0; i < replace_array.length; i++) {

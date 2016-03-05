@@ -13,10 +13,11 @@ module.exports = class Surly {
     this.callbacks.respond = options.respond;
     this.environment = new Environment();
     this.aiml = new Aiml({
-      environment: this.environment
+      surly: this
     });
     this.aiml.loadDir(options.brain);
     this.environment.aiml = this.aiml; // @todo this is getting circular. Hmmm.
+    this.previous_response = '';
   }
 
   /**
@@ -46,7 +47,7 @@ module.exports = class Surly {
   * @param  {Function} callback
   * @return {String}
   */
-  talk (sentence, user_id) {
+  talk (callback, sentence, user_id) {
     var i,
     start_time = new Date(),
     response;
@@ -75,11 +76,14 @@ module.exports = class Surly {
     // }
 
     var template = this.aiml.findTemplate(sentence);
-    response = 'Fuck knows.';
 
     if (template) {
-      // response = this.getTemplateText(template[0]);
-      response = template.getText();
+      template.getText(function (err, result) {
+        this.handleResult(result);
+        callback(err, result);
+      }.bind(this));
+    } else {
+      callback('No match.', 'Fuck knows.');
     }
 
     // @todo this!
@@ -87,16 +91,16 @@ module.exports = class Surly {
     //   previousResponse = this.normaliseTemplate(template);
     // }
 
-    var end_time = new Date();
-
-    this.log('OUTPUT: ' + response + ' (' + (end_time - start_time) + 'ms)');
-    this.respond(response);
+    // var end_time = new Date();
+    //
+    // this.log('OUTPUT: ' + response + ' (' + (end_time - start_time) + 'ms)');
+    // this.respond(response);
   }
 
   /**
-  * Send the results of talk() back to the user
+  * Do any extra stuff that needs doing with the results
   */
-  respond (response) {
-    this.callbacks.respond(response);
+  handleResult (response) {
+    this.previous_response = response;
   }
 };

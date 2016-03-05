@@ -1,8 +1,11 @@
 "use strict";
 
-module.exports = class Get {
-  constructor (node, environment) {
-    this.environment = environment;
+var BaseNode = require('../BaseNode');
+
+module.exports = class Get extends BaseNode {
+  constructor (node, surly) {
+    super(node, surly);
+    this.type = 'get';
     this.name = node.attr('name').value();
     this.default = node.attr('default');
 
@@ -11,15 +14,15 @@ module.exports = class Get {
     }
   }
 
-  getText() {
-    var value = this.environment.getVariable(this.name);
+  getText(callback) {
+    var value = this.surly.environment.getVariable(this.name);
 
     if (value) {
-      return value;
+      callback(null, value);
     } else if (this.default) {
-      return this.default;
+      callback(null, this.default);
     } else {
-      return '[error]';
+      callback('Undefined variable.', '[UNKNOWN]');
     }
   }
 };

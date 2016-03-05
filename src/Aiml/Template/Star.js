@@ -3,8 +3,10 @@
 var BaseNode = require('../BaseNode');
 
 module.exports = class Star extends BaseNode {
-  constructor (node, environment) {
-    super(node, environment);
+  constructor (node, surly) {
+    super(node, surly);
+
+    this.type = 'star';
 
     if (node.attr('index')) {
       this.index = node.attr('index').value() - 1;
@@ -13,13 +15,14 @@ module.exports = class Star extends BaseNode {
     }
   }
 
-  getText () {
-    var wildcards = this.environment.wildcard_stack.getLast();
+  getText (callback) {
+    var wildcards = this.surly.environment.wildcard_stack.getLast();
 
     if (typeof wildcards[this.index] === 'undefined') {
       this.debug('Error: STAR with no matching * value.');
+      callback('Star with no matching * value.', 'ERROR!');
     } else {
-      return wildcards[this.index];
+      callback(null, wildcards[this.index]);
     }
   }
 };

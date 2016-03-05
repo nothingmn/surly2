@@ -8,9 +8,9 @@ var BaseNode = require('../BaseNode');
  * @param {BaseNode} node libxmljs node
  */
 module.exports = class Random extends BaseNode {
-  getText () {
+  getText (callback) {
     var elem = this.children[Math.floor(Math.random() * this.children.length)];
 
-    return elem.getText();
+    elem.getText(callback);
   }
 };

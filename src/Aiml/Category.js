@@ -15,7 +15,7 @@ module.exports = class Category {
    * Constructor method
    * @param  {Node} node Xmllibjs node object
    */
-  constructor (category, environment) {
+  constructor (category, surly) {
     var patterns = category.find('pattern');
     var templates = category.find('template');
     var thats = category.find('that');
@@ -28,9 +28,9 @@ module.exports = class Category {
       throw 'Category should have exactly one TEMPLATE.';
     }
 
-    this.pattern = new Pattern(patterns[0], environment);
+    this.pattern = new Pattern(patterns[0], surly);
     this.pattern.category = this;
-    this.template = new Template(templates[0], environment);
+    this.template = new Template(templates[0], surly);
     this.template.category = this;
 
     this.that = '';
