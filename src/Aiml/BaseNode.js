@@ -66,6 +66,12 @@ module.exports = class BaseNode {
         case 'uppercase':
           this.children.push(new Uppercase(child_nodes[i], this.surly));
           break;
+        case 'lowercase':
+          this.children.push(new Lowercase(child_nodes[i], this.surly));
+          break;
+        case 'formal':
+          this.children.push(new Formal(child_nodes[i], this.surly));
+          break;
         case 'that':
           this.children.push(new That(child_nodes[i], this.surly));
           break;
@@ -117,4 +123,6 @@ const Star = require('./Template/Star');
 const Size = require('./Template/Size');
 const Random = require('./Template/Random');
 const Uppercase = require('./Template/Uppercase');
+const Lowercase = require('./Template/Lowercase');
+const Formal = require('./Template/Formal');
 const That = require('./Template/That');
