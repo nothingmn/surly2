@@ -12,9 +12,9 @@ AIML Coverage
     * ✘ That
 * Template
   * ✔ Star
-  * ✘ That
+  * ✔ That
   * ✘ Input
-  * ✘ Thatstar
+  * ✔ Thatstar
   * ✘ Topicstar
   * ✔ Get
   * ✔ Bot
@@ -24,11 +24,11 @@ AIML Coverage
   * ✘ Person2
   * ✘ Gender
 * System
-  * ✘ Date
-  * ✘ Size
+  * ✔ Date
+  * ✔ Size
   * ✘ Version
 * Formatting
-  * ✘ Uppercase
+  * ✔ Uppercase
   * ✘ Lowercase
   * ✘ Formal
   * ✘ Sentence
