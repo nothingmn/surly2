@@ -72,6 +72,9 @@ module.exports = class BaseNode {
         case 'formal':
           this.children.push(new Formal(child_nodes[i], this.surly));
           break;
+        case 'sentence':
+          this.children.push(new Sentence(child_nodes[i], this.surly));
+          break;
         case 'that':
           this.children.push(new That(child_nodes[i], this.surly));
           break;
@@ -125,4 +128,5 @@ const Random = require('./Template/Random');
 const Uppercase = require('./Template/Uppercase');
 const Lowercase = require('./Template/Lowercase');
 const Formal = require('./Template/Formal');
+const Sentence = require('./Template/Sentence');
 const That = require('./Template/That');

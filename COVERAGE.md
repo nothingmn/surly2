@@ -31,7 +31,7 @@ AIML Coverage
   * ✔ Uppercase
   * ✔ Lowercase
   * ✔ Formal
-  * ✘ Sentence
+  * ✔ Sentence
 * Conditional
   * ✘ Condition
   * ✔ Random
