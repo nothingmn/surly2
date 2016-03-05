@@ -30,7 +30,7 @@ AIML Coverage
 * Formatting
   * ✔ Uppercase
   * ✔ Lowercase
-  * ✘ Formal
+  * ✔ Formal
   * ✘ Sentence
 * Conditional
   * ✘ Condition
