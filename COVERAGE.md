@@ -29,7 +29,7 @@ AIML Coverage
   * ✘ Version
 * Formatting
   * ✔ Uppercase
-  * ✘ Lowercase
+  * ✔ Lowercase
   * ✘ Formal
   * ✘ Sentence
 * Conditional
