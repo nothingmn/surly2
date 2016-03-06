@@ -12,7 +12,7 @@ module.exports = class Text {
    * Constructor method
    * @param  {Node} node Xmllibjs node object
    */
-  constructor (node) {
+  constructor (node, surly) {
     this.children = [];
     this.type = 'text';
 

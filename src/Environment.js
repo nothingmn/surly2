@@ -7,7 +7,7 @@
 module.exports = class Environment {
   constructor () {
     this.bot_attributes = { // @todo - store these somewhere more appropriate
-      "age": "0",
+      "age": "1",
       "arch": "Linux",
       "baseballteam": "Red Sox",
       "birthday": "29th March 2014",
@@ -80,6 +80,11 @@ module.exports = class Environment {
       "website": "https://github.com/mrchimp/surly2"
     };
     this.stored_variables = {};
+    this.inventory = [
+      'The beat',
+      'A blueberry muffin',
+      'Sweden'
+    ];
     this.wildcard_stack = new Stack(10);
   }
 
@@ -118,8 +123,26 @@ module.exports = class Environment {
     return this.stored_variables[name];
   }
 
+  /**
+   * Get the number of loaded categories. For use in the <size /> tag.
+   * @return {Integer}
+   */
   countCategories () {
     return this.aiml.categories.length;
+  }
+
+  /**
+   * Push new_item into the inventory and return whatever falls off
+   * the other end
+   */
+  inventoryPush(new_item) {
+    this.inventory.push(new_item);
+
+    if (this.inventory.length > 1) {
+      return this.inventory.shift();
+    }
+
+    return '';
   }
 };
 

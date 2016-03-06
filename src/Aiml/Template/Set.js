@@ -5,8 +5,7 @@ var BaseNode = require('../BaseNode');
 module.exports = class Set extends BaseNode{
   constructor (node, surly) {
     super(node, surly);
-
-    this.type = 'Set';
+    this.type = 'set';
     this.name = node.attr('name').value();
   }
 

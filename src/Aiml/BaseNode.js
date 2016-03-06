@@ -26,24 +26,32 @@ module.exports = class BaseNode {
     for (var i = 0; i < child_nodes.length; i++) {
       node_type = child_nodes[i].name().toLowerCase();
 
+      // @todo - replace this with something nicer
       switch (node_type) {
         case 'a': // Treat A tags as plain text. @todo
+        case 'text':
           this.children.push(new TextNode(child_nodes[i], this.surly));
-          break;
-        case 'bot':
-          this.children.push(new Bot(child_nodes[i], this.surly));
           break;
         case 'br':
           this.children.push(new TextNode('\n', this.surly));
           break;
+        case 'bot':
+          this.children.push(new Bot(child_nodes[i], this.surly));
+          break;
         case 'date':
-          this.children.push(new DateNode('\n', this.surly));
+          this.children.push(new DateNode(child_nodes[i], this.surly));
           break;
         case 'get':
           this.children.push(new Get(child_nodes[i], this.surly));
           break;
+        case 'inventory':
+          this.children.push(new Inventory(child_nodes[i], this.surly));
+          break;
         case 'li':
           this.children.push(new Li(child_nodes[i], this.surly));
+          break;
+        case 'lowercase':
+          this.children.push(new Lowercase(child_nodes[i], this.surly));
           break;
         case 'random':
           this.children.push(new Random(child_nodes[i], this.surly));
@@ -60,14 +68,8 @@ module.exports = class BaseNode {
         case 'star':
           this.children.push(new Star(child_nodes[i], this.surly));
           break;
-        case 'text':
-          this.children.push(new TextNode(child_nodes[i], this.surly));
-          break;
         case 'uppercase':
           this.children.push(new Uppercase(child_nodes[i], this.surly));
-          break;
-        case 'lowercase':
-          this.children.push(new Lowercase(child_nodes[i], this.surly));
           break;
         case 'formal':
           this.children.push(new Formal(child_nodes[i], this.surly));
@@ -77,6 +79,9 @@ module.exports = class BaseNode {
           break;
         case 'that':
           this.children.push(new That(child_nodes[i], this.surly));
+          break;
+        case 'think':
+          this.children.push(new Think(child_nodes[i], this.surly));
           break;
         default:
           this.children.push(new TextNode('[NOT IMPLEMENTED: ' + node_type + ']', this.surly));
@@ -104,7 +109,7 @@ module.exports = class BaseNode {
         results = results.join('');
       }
 
-      respond(err, results);
+      respond(err, results.trim());
     });
   }
 
@@ -130,3 +135,5 @@ const Lowercase = require('./Template/Lowercase');
 const Formal = require('./Template/Formal');
 const Sentence = require('./Template/Sentence');
 const That = require('./Template/That');
+const Think = require('./Template/Think');
+const Inventory = require('./Template/Inventory');
