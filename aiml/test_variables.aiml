@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<aiml>
+  <category>
+    <pattern>SET</pattern>
+    <template>Set 'user' to 'foo'.<set name="user">foo</set></template>
+  </category>
+
+  <category>
+    <pattern>GET</pattern>
+    <template>Looked up 'user' and found '<get name="user" />'.</template>
+  </category>
+</aiml>

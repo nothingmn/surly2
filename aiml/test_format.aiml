@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<aiml>
+	<category>
+		<pattern>UPPERCASE *</pattern>
+		<template><uppercase><star /></uppercase></template>
+	</category>
+
+	<category>
+		<pattern>LOWERCASE *</pattern>
+		<template><lowercase><star /></lowercase></template>
+	</category>
+
+	<category>
+		<pattern>FORMAL *</pattern>
+		<template><formal><star /></formal></template>
+	</category>
+
+	<category>
+		<pattern>SENTENCE</pattern>
+		<template><sentence>THIS TEXT SHOULD BE FORMATTED in sentence case. tHAT means that the first letter of each sentence should be uppercase. everything else should be lowercase.</sentence></template>
+	</category>
+</aiml>

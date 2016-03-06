@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<aiml>
+	<category>
+    <pattern>TAKE *</pattern>
+    <template>
+      <think>
+        <inventory action="swap"><star /></inventory>
+      </think>
+      Okay, took <star /> and dropped <get name="last_dropped" default="nothing"></get>
+    </template>
+  </category>
+
+  <category>
+    <pattern>INVENTORY</pattern>
+    <template><inventory action="list" /></template>
+  </category>
+</aiml>
