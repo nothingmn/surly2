@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<aiml>
+  <!-- This must come before the one below because they both match the
+        same pattern, meaning that that one would match first and this one
+        would never get hit -->
+  <category>
+    <pattern>HI</pattern>
+    <that>HELLO</that>
+    <template>I already said hello.</template>
+  </category>
+
+  <category>
+    <pattern>HI</pattern>
+    <template>Hello!</template>
+  </category>
+</aiml>

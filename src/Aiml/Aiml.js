@@ -1,6 +1,7 @@
 "use strict";
 
 const fs = require('fs');
+const async = require('async');
 const BaseNode = require('./BaseNode');
 const libxmljs = require('libxmljs');
 const Category = require('./Category');
@@ -18,7 +19,6 @@ module.exports = class Aiml {
     this.surly = options.surly;
     this.wipe();
     this.categories = [];
-    this.previous_response = '';
   }
 
   /**
@@ -54,30 +54,44 @@ module.exports = class Aiml {
   }
 
   /**
+   * Give a sentence and get a response
+   */
+  getResponse(sentence, callback) {
+    var template = this.findMatchingCategory(sentence, function (category) {
+
+      if (category) {
+        var template = category.getTemplate();
+        template.getText(callback);
+      } else {
+        callback('No match.', 'Fuck knows.');
+      }
+    }.bind(this));
+  }
+
+  /**
    * Loop through loaded AIML and return the `template` from the first `category`
    * with a `pattern` that matches `sentence`.
    * @param {String} sentence    Text input from user
    */
-  findTemplate (sentence) {
+  findMatchingCategory (sentence, foundCatCallback) {
     if (!this.hasData()) {
       throw 'No data loaded.';
     }
 
     sentence = this.normaliseSentence(sentence);
 
-    for (var i = 0; i < this.categories.length; i++) {
-      var pattern = this.categories[i].getPattern();
+    async.detectSeries(this.categories, function (item, callback) {
+      item.match(sentence, callback);
+      // callback(true, true);
+    }, function (matchingCategory) { // Shouldn't there be err here? What?!
+      foundCatCallback(matchingCategory);
+    });
 
-      if (pattern.compare(sentence)) {
-        this.debug('Found matching pattern: ' + sentence + ' -- ' + pattern);
+    // for (var i = 0; i < this.categories.length; i++) {
+    //   this.categories[i]
+    // }
 
-        if (this.categories[i].checkThat(this.previous_response)) {
-          return this.categories[i].getTemplate();
-        }
-      }
-    }
-
-    return false;
+    // foundCatCallback(false);
   }
 
   /**
@@ -152,9 +166,16 @@ module.exports = class Aiml {
    * @return {[type]}          [description]
    */
   normaliseSentence (sentence) {
+
+    this.surly.debug('normalising ', sentence)
     // add spaces to prevent false positives
     if (sentence.charAt(0) !== ' ') {
       sentence = ' ' + sentence;
+    }
+
+    // Remove trailing punctuation - @todo use regex!
+    while (['!', '.', '?'].indexOf(sentence.charAt(sentence.length -1)) !== -1) {
+      sentence = sentence.substr(0, sentence.length - 1);
     }
 
     if (sentence.charAt(sentence.length - 1) !== ' ') {

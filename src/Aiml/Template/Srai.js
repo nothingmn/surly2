@@ -24,6 +24,6 @@ module.exports = class Srai extends BaseNode {
    */
   getText (callback) {
     // @todo - make this work!
-    this.surly.talk(callback, this.content);
+    this.surly.talk(this.content, callback);
   }
 };

@@ -86,6 +86,7 @@ module.exports = class Environment {
       'Sweden'
     ];
     this.wildcard_stack = new Stack(10);
+    this.previous_response = '';
   }
 
   /**

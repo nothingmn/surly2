@@ -37,7 +37,8 @@ module.exports = class Surly {
   * @param  {String}    msg Message to output
   * @return {Undefined}
   */
-  debug (msg) {
+  debug () {
+    var msg = Array.prototype.join.call(arguments, ', ');
     this.log('DEBUG - ' + msg);
   }
 
@@ -47,60 +48,52 @@ module.exports = class Surly {
   * @param  {Function} callback
   * @return {String}
   */
-  talk (callback, sentence, user_id) {
+  talk (sentence, callback, user_id) {
     var i,
-    start_time = new Date(),
-    response;
+      start_time = new Date(),
+      response;
 
     this.debug('INPUT: ' + sentence);
-
     this.input_stack.push(sentence);
+
+    if (sentence.length === 0) {
+      callback(null, 'Speak up!');
+      return;
+    }
 
     if (sentence.substr(0,1) === '/') {
       this.debug('Skipping command string.'); // @todo - do stuff
       this.respond('COMMANDS DO NOTHING YET.');
-      return false;
+      return;
     }
 
-    // if (this.brain.length === 0) {
-    //   this.response('My mind is blank.');
-    //   return;
-    // }
-
-    // for (i = 0; i < this.brain.length; i++) {
-    //   template = this.brain[i].findTemplate(sentence);
-    //
-    //   if (template) {
-    //     break;
-    //   }
-    // }
-
-    var template = this.aiml.findTemplate(sentence);
-
-    if (template) {
-      template.getText(function (err, result) {
-        this.handleResult(result);
-        callback(err, result);
-      }.bind(this));
-    } else {
-      callback('No match.', 'Fuck knows.');
+    if (this.environment.countCategories() === 0) {
+      callback(null, 'My mind is blank.');
+      return;
     }
 
-    // @todo this!
-    // if (response) {
-    //   previousResponse = this.normaliseTemplate(template);
-    // }
-
-    // var end_time = new Date();
-    //
-    // this.log('OUTPUT: ' + response + ' (' + (end_time - start_time) + 'ms)');
-    // this.respond(response);
+    this.aiml.getResponse(sentence, function (err, result) {
+      this.handleResult(result);
+      callback(err, result);
+    }.bind(this));
   }
 
   /**
   * Do any extra stuff that needs doing with the results
   */
   handleResult (response) {
-    this.previous_response = response;
+    // process.exit();
+    // var end_time = new Date();
+    //
+    // this.log('OUTPUT: ' + response + ' (' + (end_time - start_time) + 'ms)');
+    // this.respond(response);
+
+    // @todo this!
+    // if (response) {
+    //   previousResponse = this.normaliseTemplate(template);
+    // }
+
+    var normal_previous = this.aiml.normaliseSentence(response).trim();
+    this.environment.previous_response = normal_previous;
   }
 };

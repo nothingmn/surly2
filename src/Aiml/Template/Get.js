@@ -22,7 +22,7 @@ module.exports = class Get extends BaseNode {
     } else if (this.default) {
       callback(null, this.default);
     } else {
-      callback('Undefined variable.', '[UNKNOWN]');
+      callback(null, '[UNKNOWN]');
     }
   }
 };

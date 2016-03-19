@@ -16,6 +16,7 @@ module.exports = class Category {
    * @param  {Node} node Xmllibjs node object
    */
   constructor (category, surly) {
+    this.surly = surly;
     var patterns = category.find('pattern');
     var templates = category.find('template');
     var thats = category.find('that');
@@ -36,8 +37,8 @@ module.exports = class Category {
     this.that = '';
 
     if (thats.length === 1) {
-      this.that = new PatternThat(thats[0]);
-      this.that.category = this;
+      this.that = new PatternThat(thats[0], surly, this);
+      // this.that.category = this;
     } else if (thats.length > 1) {
       throw 'Category must not contain more than one THAT.';
     }
@@ -58,13 +59,19 @@ module.exports = class Category {
   * @param  {Object}  category Libxmljs category aiml node
   * @return {Boolean}          True if <that> exists and matches
   */
-  checkThat (previous_response) {
+  checkThat (callback) {
     // If no THAT then it matches by default
     if (!this.that) {
-      return true;
+      this.surly.debug('No THAT.')
+      return callback(true);
     }
 
-    return this.that.text() === previous_response.toUpperCase();
+    this.that.getText(function (err, thatText) {
+      var previous = this.surly.environment.previous_response.toUpperCase();
+
+      this.surly.debug('Comparing THAT - "' + thatText + '", "' + previous + '"');
+      callback(thatText === previous);
+    }.bind(this));
   }
 
   /**
@@ -73,5 +80,23 @@ module.exports = class Category {
   */
   getTemplate () {
     return this.template;
+  }
+
+  /**
+   * Check the category against a given sentence. Also, if a THAT tag is present
+   * in the category, check that against the previous response
+   * @return {Boolean} True if sentence matches
+   */
+  match (sentence, callback) {
+    if (this.pattern.compare(sentence)) {
+      this.surly.debug('Found matching pattern: ' + sentence + ' -- ' + this.pattern);
+
+      this.checkThat(function (matches) {
+        callback(matches);
+      }.bind(this));
+    } else {
+      this.surly.debug('No match');
+      callback(false)
+    }
   }
 };
