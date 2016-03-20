@@ -26,7 +26,7 @@ AIML Coverage
 * System
   * ✔ Date
   * ✔ Size
-  * ✘ Version
+  * ✔ Version
 * Formatting
   * ✔ Uppercase
   * ✔ Lowercase

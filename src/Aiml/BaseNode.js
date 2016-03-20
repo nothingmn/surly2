@@ -83,6 +83,9 @@ module.exports = class BaseNode {
         case 'think':
           this.children.push(new Think(child_nodes[i], this.surly));
           break;
+        case 'version':
+          this.children.push(new Version(child_nodes[i], this.surly));
+          break;
         default:
           this.children.push(new TextNode('[NOT IMPLEMENTED: ' + node_type + ']', this.surly));
       }
@@ -136,4 +139,5 @@ const Formal = require('./Template/Formal');
 const Sentence = require('./Template/Sentence');
 const That = require('./Template/That');
 const Think = require('./Template/Think');
+const Version = require('./Template/Version');
 const Inventory = require('./Template/Inventory');

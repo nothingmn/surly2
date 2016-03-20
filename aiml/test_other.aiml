@@ -13,4 +13,10 @@
     <pattern>HI</pattern>
     <template>Hello!</template>
   </category>
+
+  <category>
+    <pattern>VERSION</pattern>
+    <template><version /></template>
+  </category>
+
 </aiml>
