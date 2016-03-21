@@ -47,7 +47,6 @@ process.stdin.addListener('data', function (d) {
 
   bot.talk(sentence, function (err, response) {
     console.log('Surly: ' + response);
-    // console.trace('output', response);
     process.stdout.write(prompt);
   });
 });

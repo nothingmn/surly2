@@ -82,16 +82,9 @@ module.exports = class Aiml {
 
     async.detectSeries(this.categories, function (item, callback) {
       item.match(sentence, callback);
-      // callback(true, true);
     }, function (matchingCategory) { // Shouldn't there be err here? What?!
       foundCatCallback(matchingCategory);
     });
-
-    // for (var i = 0; i < this.categories.length; i++) {
-    //   this.categories[i]
-    // }
-
-    // foundCatCallback(false);
   }
 
   /**
@@ -156,7 +149,7 @@ module.exports = class Aiml {
 
   /**
    * Perform input normalisation. See AIML spec section 8.3
-   * Should include:
+   * Should (but doesn't yet) include:
    *  - Substitution normalisations
    *  - Sentence-splitting normalisations
    *  - Pattern-fitting normalisations
@@ -166,8 +159,8 @@ module.exports = class Aiml {
    * @return {[type]}          [description]
    */
   normaliseSentence (sentence) {
-
     this.surly.debug('normalising ', sentence)
+
     // add spaces to prevent false positives
     if (sentence.charAt(0) !== ' ') {
       sentence = ' ' + sentence;

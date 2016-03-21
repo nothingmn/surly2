@@ -9,7 +9,7 @@ AIML Coverage
   * ✔ Category
   * ✘ Topic
   * ✔ Pattern
-    * ✘ That
+    * ✔ That
 * Template
   * ✔ Star
   * ✔ That
