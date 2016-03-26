@@ -20,6 +20,11 @@ module.exports = class BaseNode {
     this.children = [];
     this.surly = surly;
 
+    // Allow empty nodes for manually creating elements
+    if (node === null) {
+      return;
+    }
+
     if (typeof node.childNodes !== 'function') {
       return false;
     }
@@ -29,7 +34,7 @@ module.exports = class BaseNode {
     for (var i = 0; i < child_nodes.length; i++) {
       node_type = child_nodes[i].name().toLowerCase();
 
-      // @todo - replace this with something nicer
+      // @todo - replace this wi something nicer
       switch (node_type) {
         case 'a': // Treat A tags as plain text. @todo
         case 'text':
@@ -43,6 +48,9 @@ module.exports = class BaseNode {
           break;
         case 'date':
           this.children.push(new DateNode(child_nodes[i], this.surly));
+          break;
+        case 'gender':
+          this.children.push(new Gender(child_nodes[i], this.surly));
           break;
         case 'get':
           this.children.push(new Get(child_nodes[i], this.surly));
@@ -58,6 +66,12 @@ module.exports = class BaseNode {
           break;
         case 'lowercase':
           this.children.push(new Lowercase(child_nodes[i], this.surly));
+          break;
+        case 'person':
+          this.children.push(new Person(child_nodes[i], this.surly));
+          break;
+        case 'person2':
+          this.children.push(new Person2(child_nodes[i], this.surly));
           break;
         case 'random':
           this.children.push(new Random(child_nodes[i], this.surly));
@@ -135,6 +149,7 @@ const async = require('async');
 const Bot = require('./Template/Bot');
 const DateNode = require('./Template/DateNode');
 const Formal = require('./Template/Formal');
+const Gender = require('./Template/Gender');
 const Get = require('./Template/Get');
 const That = require('./Template/That');
 const Think = require('./Template/Think');
@@ -142,6 +157,8 @@ const Input = require('./Template/Input');
 const Inventory = require('./Template/Inventory');
 const Li = require('./Template/Li');
 const Lowercase = require('./Template/Lowercase');
+const Person = require('./Template/Person');
+const Person2 = require('./Template/Person2');
 const Random = require('./Template/Random');
 const Sentence = require('./Template/Sentence');
 const SetNode = require('./Template/Set');

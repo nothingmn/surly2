@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<aiml>
+  <category>
+    <pattern>PERSON</pattern>
+    <template>The following lines should be the same:<br /><person>i me my mine myself he him his himself she her hers herself</person><br />he him his his himself i me mine myself I me mine myself
+    </template>
+  </category>
+
+  <category>
+    <pattern>PERSON *</pattern>
+    <template><person /></template>
+  </category>
+
+  <category>
+    <pattern>PERSON2</pattern>
+    <template>The following lines should be the same:<br /><person2>i me my mine myself you your yours yourself</person2><br />you you your yours yourself me my mine myself
+    </template>
+  </category>
+
+  <category>
+    <pattern>PERSON2 *</pattern>
+    <template><person2 /></template>
+  </category>
+
+  <category>
+    <pattern>GENDER</pattern>
+    <template>The following lines should be the same:<br /><gender>he him his himself she her hers herself</gender><br />she her her herself he him his himself</template>
+  </category>
+
+  <category>
+    <pattern>GENDER *</pattern>
+    <template><gender /></template>
+  </category>
+</aiml>

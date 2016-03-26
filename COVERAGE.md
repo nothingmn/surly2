@@ -20,9 +20,9 @@ AIML Coverage
   * ✔ Bot
 * Shortcuts
   * ✔ Sr
-  * ✘ Person
-  * ✘ Person2
-  * ✘ Gender
+  * ✔ Person
+  * ✔ Person2
+  * ✔ Gender
 * System
   * ✔ Date
   * ✔ Size
@@ -41,9 +41,9 @@ AIML Coverage
 * Symbolic Reduction
   * ✔ SRAI
 * Transformationals
-  * ✘ Person
-  * ✘ Person2
-  * ✘ Gender
+  * ✔ Person
+  * ✔ Person2
+  * ✔ Gender
 * Covert
   * ✔ Think
   * ✘ Learn
