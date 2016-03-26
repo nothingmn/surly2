@@ -19,7 +19,7 @@ module.exports = class Star extends BaseNode {
     var wildcards = this.surly.environment.wildcard_stack.getLast();
 
     if (typeof wildcards[this.index] === 'undefined') {
-      this.debug('Error: STAR with no matching * value.');
+      this.log.debug('Error: STAR with no matching * value.');
       callback('Star with no matching * value.', 'ERROR!');
     } else {
       callback(null, wildcards[this.index]);

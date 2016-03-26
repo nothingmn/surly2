@@ -79,7 +79,9 @@ module.exports = class Environment {
       "wear": "plastic shrink wrap",
       "website": "https://github.com/mrchimp/surly2"
     };
-    this.stored_variables = {};
+    this.stored_variables = {
+      'topic': '*'
+    };
     this.inventory = [
       'The beat',
       'A blueberry muffin',
@@ -108,6 +110,7 @@ module.exports = class Environment {
    * @param {String} value Value of variable
    */
   setVariable (name, value) {
+    if (name === 'topic') value = value.toUpperCase();
     this.stored_variables[name] = value;
   }
 

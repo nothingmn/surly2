@@ -2,7 +2,7 @@
 
 var BaseNode = require('../BaseNode');
 
-module.exports = class Set extends BaseNode{
+module.exports = class Set extends BaseNode {
   constructor (node, surly) {
     super(node, surly);
     this.type = 'set';

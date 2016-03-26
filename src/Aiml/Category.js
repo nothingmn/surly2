@@ -1,8 +1,9 @@
 "use strict";
 
-var Template = require('./Template');
-var Pattern = require('./Pattern');
-var PatternThat = require('./Pattern/That');
+const Template = require('./Template');
+const Pattern = require('./Pattern');
+const PatternThat = require('./Pattern/That');
+const Logger = require('../Logger');
 
 /**
  * Category node. Children MUST include a single `pattern` node AND a single
@@ -15,8 +16,10 @@ module.exports = class Category {
    * Constructor method
    * @param  {Node} node Xmllibjs node object
    */
-  constructor (category, surly) {
+  constructor (category, surly, topic) {
+    this.topic = topic || '*';
     this.surly = surly;
+    this.log = new Logger();
     var patterns = category.find('pattern');
     var templates = category.find('template');
     var thats = category.find('that');
@@ -33,7 +36,6 @@ module.exports = class Category {
     this.pattern.category = this;
     this.template = new Template(templates[0], surly);
     this.template.category = this;
-
     this.that = '';
 
     if (thats.length === 1) {
@@ -42,7 +44,6 @@ module.exports = class Category {
     } else if (thats.length > 1) {
       throw 'Category must not contain more than one THAT.';
     }
-
   }
 
   /**
@@ -62,14 +63,14 @@ module.exports = class Category {
   checkThat (callback) {
     // If no THAT then it matches by default
     if (!this.that) {
-      this.surly.debug('No THAT.')
+      this.log.debug('No THAT.');
       return callback(true);
     }
 
     this.that.getText(function (err, thatText) {
       var previous = this.surly.environment.previous_response.toUpperCase();
 
-      this.surly.debug('Comparing THAT - "' + thatText + '", "' + previous + '"');
+      this.log.debug('Comparing THAT - "' + thatText + '", "' + previous + '"');
       callback(thatText === previous);
     }.bind(this));
   }
@@ -85,18 +86,23 @@ module.exports = class Category {
   /**
    * Check the category against a given sentence. Also, if a THAT tag is present
    * in the category, check that against the previous response
-   * @return {Boolean} True if sentence matches
    */
   match (sentence, callback) {
     if (this.pattern.compare(sentence)) {
-      this.surly.debug('Found matching pattern: ' + sentence + ' -- ' + this.pattern);
+      this.log.debug('Matched pattern: ' + sentence + ' -- ' + this.pattern);
+
+      if (this.topic !== '*' &&
+        this.topic.toUpperCase() !== this.surly.environment.getVariable('topic')) {
+          callback(false);
+          return;
+      }
 
       this.checkThat(function (matches) {
         callback(matches);
       }.bind(this));
     } else {
-      this.surly.debug('No match');
-      callback(false)
+      this.log.debug('No match');
+      callback(false);
     }
   }
 };

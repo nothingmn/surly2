@@ -1,12 +1,14 @@
 "use strict";
 
-var fs = require('fs');
-var Stack = require('./stack');
-var Aiml = require('./Aiml/Aiml');
-var Environment = require('./Environment');
+const fs = require('fs');
+const Stack = require('./stack');
+const Aiml = require('./Aiml/Aiml');
+const Environment = require('./Environment');
+const Logger = require('./Logger');
 
 module.exports = class Surly {
   constructor (options) {
+    this.log = new Logger();
     this.brain = [];
     this.input_stack = new Stack(10);
     this.callbacks = {};
@@ -21,28 +23,6 @@ module.exports = class Surly {
   }
 
   /**
-  * Log a message to the log file
-  * @param  {String} msg
-  */
-  log (msg) {
-    fs.appendFile(__dirname + '/../logs/surly.log', msg + '\n', function (err) {
-      if (err) {
-        throw 'Failed to write to log file. ' + err;
-      }
-    });
-  }
-
-  /**
-  * Output text to console with indents to make it stand out
-  * @param  {String}    msg Message to output
-  * @return {Undefined}
-  */
-  debug () {
-    var msg = Array.prototype.join.call(arguments, ', ');
-    this.log('DEBUG - ' + msg);
-  }
-
-  /**
   * Say 'sentence' to Surly
   * @param  {String}   sentence
   * @param  {Function} callback
@@ -53,7 +33,7 @@ module.exports = class Surly {
       start_time = new Date(),
       response;
 
-    this.debug('INPUT: ' + sentence);
+    this.log.debug('INPUT: ' + sentence);
     this.input_stack.push(sentence);
 
     if (sentence.length === 0) {
@@ -62,7 +42,7 @@ module.exports = class Surly {
     }
 
     if (sentence.substr(0,1) === '/') {
-      this.debug('Skipping command string.'); // @todo - do stuff
+      this.log.debug('Skipping command string.'); // @todo - do stuff
       this.respond('COMMANDS DO NOTHING YET.');
       return;
     }

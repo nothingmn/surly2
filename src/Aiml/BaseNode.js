@@ -1,5 +1,7 @@
 "use strict";
 
+const Logger = require('../Logger');
+
 /**
  * Base node class for nodes that can have children
  */
@@ -13,6 +15,7 @@ module.exports = class BaseNode {
     var child_nodes,
       node_type;
 
+    this.log = new Logger();
     this.type = 'basenode';
     this.children = [];
     this.surly = surly;

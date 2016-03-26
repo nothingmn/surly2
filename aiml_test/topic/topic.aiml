@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<aiml>
+
+  <!-- This should fail - topics must have a name -->
+  <!--<topic>
+    <category>
+      <pattern>LOL</pattern>
+      <template>FUBAR</template>
+    </category>
+  </topic>-->
+
+  <category>
+    <pattern>TOPIC</pattern>
+    <template>Current topic is '<get name="topic" />'.</template>
+  </category>
+
+  <category>
+    <pattern>TOPIC *</pattern>
+    <template>Set topic to <star /><think><set name="topic"><star /></set></think></template>
+  </category>
+
+  <category>
+    <pattern>TEST</pattern>
+    <template>NO TOPIC</template>
+  </category>
+
+  <topic name="foo">
+    <category>
+      <pattern>TEST</pattern>
+      <template>FOO!</template>
+    </category>
+  </topic>
+
+  <topic name="bar">
+    <category>
+      <pattern>TEST</pattern>
+      <template>BAR!</template>
+    </category>
+  </topic>
+</aiml>

@@ -5,6 +5,7 @@ const async = require('async');
 const BaseNode = require('./BaseNode');
 const libxmljs = require('libxmljs');
 const Category = require('./Category');
+const Logger = require('../Logger');
 
 /**
 * Main AIML handler. Contains a list of category nodes, potentially loaded
@@ -12,13 +13,10 @@ const Category = require('./Category');
 */
 module.exports = class Aiml {
   constructor (options) {
-    /**
-    * The current topic
-    */
-    this.topic = '*';
     this.surly = options.surly;
     this.wipe();
     this.categories = [];
+    this.log = new Logger();
   }
 
   /**
@@ -35,13 +33,41 @@ module.exports = class Aiml {
    * @param {String} aiml    A whole AIML file
    */
   parseAiml (aiml) {
-    // @todo handle topics
-    var xmlDoc = libxmljs.parseXmlString(aiml),
-      categories = xmlDoc.find('category');
+    this.log.debug('parsing aiml...');
 
-    for (var i = 0; i < categories.length; i++) {
-      this.debug('Found category.', categories[i]);
+    var xmlDoc = libxmljs.parseXmlString(aiml),
+      topics = xmlDoc.find('topic'),
+      categories,
+      topic_name,
+      topic_cats,
+      i, j;
+
+    // Handle topic cats first - they should be matched first
+    for (i = 0; i < topics.length; i++) {
+      topic_name = topics[i].attr('name').value();
+      topic_cats = topics[i].find('category');
+
+      for (j = 0; j < topic_cats.length; j++) {
+        this.categories.push(new Category(topic_cats[j], this.surly, topic_name));
+      }
+    }
+
+    categories = xmlDoc.find('category');
+    this.log.debug('Loading ' + this.categories.length + ' categories.');
+
+    for (i = 0; i < categories.length; i++) {
       this.categories.push(new Category(categories[i], this.surly));
+    }
+
+    this.showCategories();
+  }
+
+  /**
+   * List out all loaded categories and their topics. For debugging.
+   */
+  showCategories () {
+    for (var i = 0; i < this.categories.length; i++) {
+      this.log.debug(this.categories[i].topic + ' - ' + this.categories[i].pattern.text_pattern);
     }
   }
 
@@ -95,7 +121,7 @@ module.exports = class Aiml {
   loadDir (dir, callback) {
     var files = fs.readdirSync(dir);
 
-    this.debug('Loading dir', dir);
+    this.log.debug('Loading dir' + dir);
 
     for (var i in files) {
       if (!files.hasOwnProperty(i)) continue;
@@ -103,7 +129,7 @@ module.exports = class Aiml {
       var name = dir + '/' + files[i];
 
       if (fs.statSync(name).isDirectory()) {
-        this.debug('Ignoring directory: ' + name);
+        this.log.debug('Ignoring directory: ' + name);
       } else if (name.substr(-5).toLowerCase() === '.aiml') {
         this.loadFile(name, callback);
       }
@@ -116,7 +142,7 @@ module.exports = class Aiml {
    * @return {Undefined}
    */
   loadFile (file, callback) {
-    this.debug('Loading file: ', file);
+    this.log.debug('Loading file: ' + file);
     fs.readFile(file, 'utf8', function (err, xml) {
       if (err) {
         throw 'Failed to load AIML file. ' + err;
@@ -124,27 +150,6 @@ module.exports = class Aiml {
 
       this.parseAiml(xml);
     }.bind(this));
-  }
-
-  /**
-   * Log a message to the log file
-   * @param  {String} msg
-    */
-  log (msg) {
-    fs.appendFile(__dirname + '/../../logs/surly.log', msg + '\n', function (err) {
-      if (err) {
-        throw 'Failed to write to log file. ' + err;
-      }
-    });
-  }
-
-  /**
-   * Output text to console with indents to make it stand out
-   * @param  {String}    msg Message to output. Multiple messages will be concatenated.
-   * @return {Undefined}
-   */
-  debug (msg) {
-    this.log('DEBUG - ' + Array.prototype.join.call(arguments, ' '));
   }
 
   /**
@@ -159,7 +164,7 @@ module.exports = class Aiml {
    * @return {[type]}          [description]
    */
   normaliseSentence (sentence) {
-    this.surly.debug('normalising ', sentence)
+    this.log.debug('normalising ', sentence);
 
     // add spaces to prevent false positives
     if (sentence.charAt(0) !== ' ') {
