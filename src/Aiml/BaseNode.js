@@ -68,6 +68,9 @@ module.exports = class BaseNode {
         case 'size':
           this.children.push(new Size(child_nodes[i], this.surly));
           break;
+        case 'sr':
+          this.children.push(new Sr(child_nodes[i], this.surly));
+          break;
         case 'srai':
           this.children.push(new Srai(child_nodes[i], this.surly));
           break;
@@ -143,6 +146,7 @@ const Random = require('./Template/Random');
 const Sentence = require('./Template/Sentence');
 const SetNode = require('./Template/Set');
 const Size = require('./Template/Size');
+const Sr = require('./Template/Sr');
 const Srai = require('./Template/Srai');
 const Star = require('./Template/Star');
 const TextNode = require('./Template/Text');

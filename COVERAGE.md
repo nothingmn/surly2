@@ -19,7 +19,7 @@ AIML Coverage
   * ✔ Get
   * ✔ Bot
 * Shortcuts
-  * ✘ Sr
+  * ✔ Sr
   * ✘ Person
   * ✘ Person2
   * ✘ Gender

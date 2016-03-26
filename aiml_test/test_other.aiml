@@ -19,4 +19,8 @@
     <template><version /></template>
   </category>
 
+  <category>
+    <pattern>SR *</pattern>
+    <template><star /> becomes: <sr /></template>
+  </category>
 </aiml>
