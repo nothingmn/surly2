@@ -13,7 +13,7 @@ Surly2 is a remake from the ground up of [Surly](http://github.com/mrchimp/surly
 Status
 ======
 
-Some stuff works. Check out `COVERAGE.md` for full details. I wouldn't try using it for anything serious quite yet.
+Actually works quite well so far but not everything is implemented. Even so, I wouldn't try using it for anything serious quite yet. Check out `COVERAGE.md` for full details.
 
 
 Requirements
@@ -29,17 +29,31 @@ Installation
  2. `npm install`
 
 
-Usage
-=====
-
-1. `node cli.js`
-2. Type some stuff.
-
-
 Config
 ======
 
 Config files are found and read by [rc](https://www.npmjs.com/package/rc). Check the "Configuration File Formats" section of the `rc` readme for more instructions. Any flag shown in `node cli.js --help` can be set in the options file.
+
+You probably just want to create `~/.surly2rc` and put something like this in it:
+
+    {
+        "brain": "/path/to/aiml/files",
+        "username": "someXMPPUser@example.com",
+        "password": "whatever"
+    }
+
+
+Usage
+=====
+
+1. `node cli.js`
+2. Talk to Surly. Type `exit` to exit.
+
+Or chat over XMPP
+
+1. Set up a config file (see above) with XMPP details `username`, `password`, `host` and `port`.
+2. `node xmpp.js`
+3. You can't add contacts yet. You'll have to do that yourself somehow.
 
 
 Thanks
