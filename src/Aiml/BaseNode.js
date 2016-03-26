@@ -47,6 +47,9 @@ module.exports = class BaseNode {
         case 'get':
           this.children.push(new Get(child_nodes[i], this.surly));
           break;
+        case 'input':
+          this.children.push(new Input(child_nodes[i], this.surly));
+          break;
         case 'inventory':
           this.children.push(new Inventory(child_nodes[i], this.surly));
           break;
@@ -126,21 +129,22 @@ module.exports = class BaseNode {
 
 const async = require('async');
 
-const Li = require('./Template/Li');
 const Bot = require('./Template/Bot');
-const Get = require('./Template/Get');
 const DateNode = require('./Template/DateNode');
-const SetNode = require('./Template/Set');
-const TextNode = require('./Template/Text');
-const Srai = require('./Template/Srai');
-const Star = require('./Template/Star');
-const Size = require('./Template/Size');
-const Random = require('./Template/Random');
-const Uppercase = require('./Template/Uppercase');
-const Lowercase = require('./Template/Lowercase');
 const Formal = require('./Template/Formal');
-const Sentence = require('./Template/Sentence');
+const Get = require('./Template/Get');
 const That = require('./Template/That');
 const Think = require('./Template/Think');
-const Version = require('./Template/Version');
+const Input = require('./Template/Input');
 const Inventory = require('./Template/Inventory');
+const Li = require('./Template/Li');
+const Lowercase = require('./Template/Lowercase');
+const Random = require('./Template/Random');
+const Sentence = require('./Template/Sentence');
+const SetNode = require('./Template/Set');
+const Size = require('./Template/Size');
+const Srai = require('./Template/Srai');
+const Star = require('./Template/Star');
+const TextNode = require('./Template/Text');
+const Uppercase = require('./Template/Uppercase');
+const Version = require('./Template/Version');

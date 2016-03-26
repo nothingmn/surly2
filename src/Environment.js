@@ -1,11 +1,14 @@
 "use strict";
 
+const Logger = require('./Logger');
+
 /**
  * Handles the AIML chat environment. Keeps track of variables, bot attributes,
  * user attributes etc.
  */
 module.exports = class Environment {
   constructor () {
+    this.log = new Logger();
     this.bot_attributes = { // @todo - store these somewhere more appropriate
       "age": "1",
       "arch": "Linux",
@@ -88,7 +91,60 @@ module.exports = class Environment {
       'Sweden'
     ];
     this.wildcard_stack = new Stack(10);
-    this.previous_response = '';
+    this.previous_inputs = [];
+    this.previous_responses = [];
+  }
+
+  /**
+   * Get a previous response
+   * @param  {Integer} index 1 = previous response, 2 = one before that etc...
+   * @return {String}
+   */
+  getPreviousResponse (index, sentence) {
+    index = index || 1;
+    index = this.previous_responses.length - index;
+    sentence = sentence || 1;
+
+    if (typeof this.previous_responses[index] === 'undefined') {
+      return '';
+    }
+
+    // @todo - handle multple sentences properly
+    var response = this.previous_responses[index].split('. ');
+
+    sentence = sentence - 1;
+
+    if (typeof response[sentence] === 'undefined') {
+      return '';
+    }
+
+    return response[sentence].trim() + '.';
+  }
+
+  /**
+   * Get a previous response
+   * @param  {Integer} index 1 = previous response, 2 = one before that etc...
+   * @return {String}
+   */
+  getPreviousInput (index, sentence) {
+    index = index || 1;
+    index = this.previous_inputs.length - index;
+    sentence = sentence || 1;
+
+    if (typeof this.previous_inputs[index] === 'undefined') {
+      return '';
+    }
+
+    // @todo - handle multple sentences properly
+    var input = this.previous_inputs[index].split('. ');
+
+    sentence = sentence - 1;
+
+    if (typeof input[sentence] === 'undefined') {
+      return '';
+    }
+
+    return input[sentence].trim() + '.';
   }
 
   /**

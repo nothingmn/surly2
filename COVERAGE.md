@@ -7,13 +7,13 @@ AIML Coverage
 
 * Main
   * ✔ Category
-  * ✘ Topic
+  * ✔ Topic
   * ✔ Pattern
     * ✔ That
 * Template
   * ✔ Star
   * ✔ That
-  * ✘ Input
+  * ✔ Input
   * ✔ Thatstar
   * ✘ Topicstar
   * ✔ Get
@@ -40,7 +40,7 @@ AIML Coverage
   * ✘ Gossip
 * Symbolic Reduction
   * ✔ SRAI
-* Transformationasl
+* Transformationals
   * ✘ Person
   * ✘ Person2
   * ✘ Gender

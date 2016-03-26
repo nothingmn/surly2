@@ -68,7 +68,7 @@ module.exports = class Category {
     }
 
     this.that.getText(function (err, thatText) {
-      var previous = this.surly.environment.previous_response.toUpperCase();
+      var previous = this.surly.environment.getPreviousResponse(1).toUpperCase();
 
       this.log.debug('Comparing THAT - "' + thatText + '", "' + previous + '"');
       callback(thatText === previous);

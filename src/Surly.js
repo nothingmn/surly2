@@ -19,7 +19,6 @@ module.exports = class Surly {
     });
     this.aiml.loadDir(options.brain);
     this.environment.aiml = this.aiml; // @todo this is getting circular. Hmmm.
-    this.previous_response = '';
   }
 
   /**
@@ -53,7 +52,7 @@ module.exports = class Surly {
     }
 
     this.aiml.getResponse(sentence, function (err, result) {
-      this.handleResult(result);
+      this.handleResult(sentence, result);
       callback(err, result);
     }.bind(this));
   }
@@ -61,7 +60,7 @@ module.exports = class Surly {
   /**
   * Do any extra stuff that needs doing with the results
   */
-  handleResult (response) {
+  handleResult (sentence, response) {
     // process.exit();
     // var end_time = new Date();
     //
@@ -74,6 +73,7 @@ module.exports = class Surly {
     // }
 
     var normal_previous = this.aiml.normaliseSentence(response).trim();
-    this.environment.previous_response = normal_previous;
+    this.environment.previous_responses.push(normal_previous);
+    this.environment.previous_inputs.push(sentence);
   }
 };

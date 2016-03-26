@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<aiml>
+  <category>
+    <pattern>THIS IS SOME INPUT</pattern>
+    <template>This is some output. This is some more output. Here is even more output.</template>
+  </category>
+
+
+  <!-- THAT -->
+  <category>
+    <pattern>THAT 2,2</pattern>
+    <template>"<that index="2,2" />"</template>
+  </category>
+
+  <category>
+    <pattern>THAT 2</pattern>
+    <template>"<that index="2" />"</template>
+  </category>
+
+  <category>
+    <pattern>THAT</pattern>
+    <template>"<that />"</template>
+  </category>
+
+
+  <!-- INPUT -->
+  <category>
+    <pattern>INPUT 2,2</pattern>
+    <template>"<input index="2,2" />"</template>
+  </category>
+
+  <category>
+    <pattern>INPUT 2</pattern>
+    <template>"<input index="2" />"</template>
+  </category>
+
+  <category>
+    <pattern>INPUT </pattern>
+    <template>"<input />"</template>
+  </category>
+
+</aiml>
