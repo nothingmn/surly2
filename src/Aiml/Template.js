@@ -3,55 +3,20 @@
 const BaseNode = require('./BaseNode');
 
 /**
- * AIML template node. Child nodes may include one or more of the following:
+ * From AIML Spec
+ * http://www.alicebot.org/TR/2001/WD-aiml/#section-template
  *
- * Atomic template elements:
- *  - Plain Text
- *  - Star
- *  - TemplateThat
- *  - Input
- *  - Thatstar
- *  - Topicstar
- *  - Get
- *  - Bot
- *  - SR
- *  - Person
- *  - Person2
- *  - Gender
- *  - Date
- *  - ID
- *  - Size
- *  - Version
+ * A template is an element that appears within category elements. The template
+ * must follow the pattern-side that element, if it exists; otherwise, it
+ * follows the pattern element. A template does not have any attributes.
  *
- * Text formatting elements
- *  - Uppercase
- *  - Lowercase
- *  - Formal
- *  - Sentence
+ * <!-- Category: aiml-category-elements -->
+ * <aiml:template>
+ *    <!-- Content: aiml-template-elements -->
+ * </aiml:template>
  *
- * Conditional elements
- *  - Condition (block, single predicate, multi-predicate)
- *
- * Capture elements
- *  - Set
- *  - Gossip
- *
- * Symbolic reduction elements
- *  - SRAI
- *
- * Transformational elements
- *  - Person
- *  - Person2
- *  - Gender
- *
- * Covert elements
- *  - Think
- *  - Learn
- *
- * External processor elements
- *  - System
- *  - Javascript
- *
- * @param {Node} template libxmljs representation of AIML template node
+ * The majority of AIML content is within the template. The template may contain
+ * zero or more AIML template elements mixed with character data. The elements
+ * described below are grouped for convenience.
  */
 module.exports = class Template extends BaseNode {};

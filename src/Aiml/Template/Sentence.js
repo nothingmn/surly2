@@ -3,7 +3,25 @@
 var BaseNode = require('../BaseNode');
 
 /**
- * Uppercase first character of each sentence. Make all other text lowercase.
+ * From AIML Spec
+ * http://www.alicebot.org/TR/2001/WD-aiml/#section-sentence
+ *
+ * The sentence element tells the AIML interpreter to render the contents of the
+ * element such that the first letter of each sentence is in uppercase, as
+ * defined (if defined) by the locale indicated by the specified language (if
+ * specified). Sentences are interpreted as strings whose last character is the
+ * period or full-stop character .. If the string does not contain a ., then the
+ * entire string is treated as a sentence.
+ *
+ * <!-- Category: aiml-template-elements -->
+ * <aiml:sentence>
+ *    <!-- Content: aiml-template-elements -->
+ * </aiml:sentence>
+ *
+ * If no character in this string has a different uppercase version, based on
+ * the Unicode standard, then the original string is returned.
+ *
+ * See Unicode Case Mapping for implementation suggestions. 
  */
 module.exports = class Sentence extends BaseNode {
   getText (callback) {
@@ -22,6 +40,6 @@ module.exports = class Sentence extends BaseNode {
       text = sentences.join('. ');
 
       callback(err, text);
-    })
+    });
   }
 };

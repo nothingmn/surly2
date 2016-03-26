@@ -1,8 +1,21 @@
 "use strict";
 
 /**
- * AIML pattern node
- * @param {Node} pattern  libxmljs representation of AIML pattern node
+ * From AIML Spec
+ * http://www.alicebot.org/TR/2001/WD-aiml/#section-pattern
+ *
+ * A pattern is an element whose content is a mixed pattern expression. Exactly
+ * one pattern must appear in each category. The pattern must always be the
+ * first child element of the category. A pattern does not have any attributes.
+ *
+ * The contents of the pattern are appended to the full match path that is
+ * constructed by the AIML interpreter at load time, as described in [8.2].
+ *
+ * <!-- Category: aiml-category-elements -->
+ *
+ * <aiml:pattern>
+ *    <!-- Content: aiml-pattern-expression -->
+ * </aiml:pattern>
  */
 module.exports = class Pattern {
   constructor (pattern, surly) {

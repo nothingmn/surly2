@@ -3,7 +3,7 @@
 var BaseNode = require('../BaseNode');
 
 /**
- * From AIM Spec
+ * From AIML Spec
  * http://www.alicebot.org/TR/2001/WD-aiml/#section-input
  *
  * The input element tells the AIML interpreter that it should substitute the

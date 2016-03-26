@@ -2,6 +2,11 @@
 
 var BaseNode = require('../BaseNode');
 
+/**
+ * Not part of the AIML Spec.
+ *
+ * Handles a list of items that the bot can hold onto.
+ */
 module.exports = class Inventory extends BaseNode{
   constructor (node, surly) {
     super(node, surly);
@@ -12,7 +17,7 @@ module.exports = class Inventory extends BaseNode{
   getText (callback) {
     switch (this.action) {
       case 'list':
-        callback(null, 'I am carrying ' + this.surly.environment.inventory.join(', ') + '.')
+        callback(null, 'I am carrying ' + this.surly.environment.inventory.join(', ') + '.');
         break;
       case 'swap':
         super.evaluateChildren(function (err, text) {
@@ -22,7 +27,7 @@ module.exports = class Inventory extends BaseNode{
         }.bind(this));
         break;
       default:
-        callback('Invalid inventory action: ' + action, '[ERROR!]');
+        callback('Invalid inventory action: ' + this.action, '[ERROR!]');
     }
   }
 };

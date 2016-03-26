@@ -3,9 +3,18 @@
 var BaseNode = require('../BaseNode');
 
 /**
- * A set of nodes. When rendered a random element will be retruned.
- * Should the element be chosen at instantiation time? Maybe.
- * @param {BaseNode} node libxmljs node
+ * From AIML Spec
+ * http://www.alicebot.org/TR/2001/WD-aiml/#section-random
+ *
+ * The random element instructs the AIML interpreter to return exactly one of
+ * its contained li elements randomly. The random element must contain one or
+ * more li elements of type defaultListItem, and cannot contain any other
+ * elements.
+ *
+ * <!-- Category: aiml-template-elements -->
+ * <aiml:random>
+ *    <!-- Contents: default-list-item+ -->
+ * </aiml:random>
  */
 module.exports = class Random extends BaseNode {
   getText (callback) {

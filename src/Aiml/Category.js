@@ -6,9 +6,23 @@ const PatternThat = require('./Pattern/That');
 const Logger = require('../Logger');
 
 /**
- * Category node. Children MUST include a single `pattern` node AND a single
- * `template` node. It also MAY include a single `that` node.
- * @param {Node} category   libxmljs representation of AIML category node
+ * From AIML Spec
+ * http://www.alicebot.org/TR/2001/WD-aiml/#section-category
+ *
+ * A category is a top-level (or second-level, if contained within a topic)
+ * element that contains exactly one pattern and exactly one template. A
+ * category does not have any attributes.
+ *
+ * All category elements that do not occur as children of an explicit topic
+ * element must be assumed by the AIML interpreter to occur as children of an
+ * "implied" topic whose name attribute has the value * (single asterisk
+ * wildcard).
+ *
+ * <!-- Category: top-level-element -->
+ *
+ * <aiml:category>
+ *    <!-- Content: aiml-category-elements -->
+ * </aiml:category>
  */
 module.exports = class Category {
 
