@@ -33,7 +33,7 @@ AIML Coverage
   * ✔ Formal
   * ✔ Sentence
 * Conditional
-  * ✘ Condition
+  * ✔ Condition
   * ✔ Random
 * Capture
   * ✔ Set

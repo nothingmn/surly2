@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<aiml>
+
+  <category>
+    <pattern>SET *</pattern>
+    <template>OK<set name="foo"><star /></set></template>
+  </category>
+
+  <category>
+    <pattern>GET</pattern>
+    <template><get name="foo" /></template>
+  </category>
+
+  <!-- blockCondition -->
+  <category>
+    <pattern>CONDITION 1</pattern>
+    <template><condition name="foo" value="bar">Foo is bar!</condition></template>
+  </category>
+
+  <!-- singlePredicateCondition -->
+  <category>
+    <pattern>CONDITION 2</pattern>
+    <template>
+      <condition name="foo">
+        <li value="bar">Bar!</li>
+        <li value="baz">Baz!</li>
+      </condition>
+    </template>
+  </category>
+
+  <!-- multiPredicateCondition -->
+  <category>
+    <pattern>CONDITION 3</pattern>
+    <template>
+      <condition>
+        <li name="foo" value="bar">Bar!</li>
+        <li name="foo" value="baz">Baz!</li>
+      </condition>
+    </template>
+  </category>
+
+</aiml>

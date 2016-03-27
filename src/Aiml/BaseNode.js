@@ -46,6 +46,9 @@ module.exports = class BaseNode {
         case 'bot':
           this.children.push(new Bot(child_nodes[i], this.surly));
           break;
+        case 'condition':
+          this.children.push(new Condition(child_nodes[i], this.surly));
+          break;
         case 'date':
           this.children.push(new DateNode(child_nodes[i], this.surly));
           break;
@@ -147,6 +150,7 @@ module.exports = class BaseNode {
 const async = require('async');
 
 const Bot = require('./Template/Bot');
+const Condition = require('./Template/Condition');
 const DateNode = require('./Template/DateNode');
 const Formal = require('./Template/Formal');
 const Gender = require('./Template/Gender');
