@@ -9,7 +9,7 @@ var conf = require('rc')('surly', {
 });
 
 var options = {
-    brain: conf.b || conf.brain || __dirname + '/aiml',
+    brain: conf.b || conf.brain || __dirname + '/data/aiml',
     help: conf.help || conf.h,
     version: conf.version,
 };

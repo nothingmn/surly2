@@ -2,7 +2,7 @@
   "name": "surly2",
   "version": "2.0.0-beta",
   "description": "An AIML interpreter",
-  "main": "cli.js",
+  "main": "src/Surly.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
