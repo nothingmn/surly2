@@ -36,7 +36,7 @@ module.exports = class Surly {
     this.input_stack.push(sentence);
 
     if (sentence.length === 0) {
-      callback(null, 'Speak up!');
+      callback('Input was empty string.', 'Speak up!');
       return;
     }
 
@@ -47,7 +47,7 @@ module.exports = class Surly {
     }
 
     if (this.environment.countCategories() === 0) {
-      callback(null, 'My mind is blank.');
+      callback('No AIML files loaded.', 'My mind is blank.');
       return;
     }
 
