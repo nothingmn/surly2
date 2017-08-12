@@ -1,10 +1,10 @@
 #!/usr/bin/env node
 
-var fs = require('fs');
-var Client = require('node-xmpp-client');
-var pkg = require('./package.json');
-var Surly = require('./src/Surly');
-var conf = require('rc')('surly', {
+const fs = require('fs');
+const {Client} = require('@xmpp/client');
+const pkg = require('./package.json');
+const Surly = require('./src/Surly');
+const conf = require('rc')('surly2', {
   username: '',   u: '',
   password: '',   p: '',
   host: '',       h: '',
@@ -13,7 +13,7 @@ var conf = require('rc')('surly', {
   help: false,
   version: false
 });
-var options = {
+const options = {
     username: conf.u || conf.username || '',
     password: conf.p || conf.password || '',
     host: conf.h || conf.host || 'talk.google.com',
@@ -41,17 +41,21 @@ if (options.version) {
     process.exit();
 }
 
-var bot = new Surly({
+const bot = new Surly({
   brain: options.brain
 });
 
-var client = new Client({
+console.log('Connecting to ' + options.host + ':' + options.port);
+console.log('Username: ' + options.username);
+console.log('Password: ' + (options.password ? 'YES' : 'NO'));
+
+const client = new Client({
   jid:      options.username,
   password: options.password,
   port:     options.port,
   host:     options.host,
   preferred: "PLAIN"
-})
+});
 
 client.on('online', function () {
   console.log('Online!');
