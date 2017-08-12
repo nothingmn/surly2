@@ -2,11 +2,12 @@
 
 var pkg = require('./package.json');
 var Surly = require('./src/Surly');
-var conf = require('rc')('surly', {
+var conf = require('rc')('surly2', {
     brain: '',      b: '',
     help: false,
     version: false
 });
+const debug = require('debug')('surly2');
 
 var options = {
     brain: conf.b || conf.brain || __dirname + '/data/aiml',

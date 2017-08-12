@@ -47,7 +47,8 @@ Usage
 =====
 
 1. `node cli.js`
-2. Talk to Surly. Type `exit` to exit.
+2. Talk to Surly.
+3. Type `exit` to exit.
 
 Or chat over XMPP
 
@@ -55,6 +56,12 @@ Or chat over XMPP
 2. `node xmpp.js`
 3. You can't add contacts yet. You'll have to do that yourself somehow.
 
+Debugging
+=========
+
+Surly uses the [debug](https://www.npmjs.com/package/debug) npm package for debugging. E.g.
+
+    DEBUG=surly2 node cli.js
 
 Thanks
 ======

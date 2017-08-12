@@ -4,11 +4,10 @@ const fs = require('fs');
 const Stack = require('./stack');
 const Aiml = require('./Aiml/Aiml');
 const Environment = require('./Environment');
-const Logger = require('./Logger');
+const debug = require('debug')('surly2');
 
 module.exports = class Surly {
   constructor (options) {
-    this.log = new Logger();
     this.brain = [];
     this.input_stack = new Stack(10);
     this.callbacks = {};
@@ -22,17 +21,18 @@ module.exports = class Surly {
   }
 
   /**
-  * Say 'sentence' to Surly
-  * @param  {String}   sentence
-  * @param  {Function} callback
-  * @return {String}
-  */
+   * Say 'sentence' to Surly
+   * @param  {String}   sentence
+   * @param  {Function} callback
+   * @return {String}
+   */
   talk (sentence, callback, user_id) {
     var i,
       start_time = new Date(),
       response;
 
-    this.log.debug('INPUT: ' + sentence);
+    debug('-----------------------------');
+    debug('INPUT: ' + sentence);
     this.input_stack.push(sentence);
 
     if (sentence.length === 0) {
@@ -41,7 +41,7 @@ module.exports = class Surly {
     }
 
     if (sentence.substr(0,1) === '/') {
-      this.log.debug('Skipping command string.'); // @todo - do stuff
+      debug('Skipping command string.'); // @todo - do stuff
       this.respond('COMMANDS DO NOTHING YET.');
       return;
     }
@@ -58,8 +58,8 @@ module.exports = class Surly {
   }
 
   /**
-  * Do any extra stuff that needs doing with the results
-  */
+   * Do any extra stuff that needs doing with the results
+   */
   handleResult (sentence, response) {
     // process.exit();
     // var end_time = new Date();

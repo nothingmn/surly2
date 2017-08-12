@@ -5,7 +5,7 @@ const async = require('async');
 const BaseNode = require('./BaseNode');
 const libxmljs = require('libxmljs');
 const Category = require('./Category');
-const Logger = require('../Logger');
+const debug = require('debug')('surly2');
 
 /**
 * Main AIML handler. Contains a list of category nodes, potentially loaded
@@ -16,7 +16,6 @@ module.exports = class Aiml {
     this.surly = options.surly;
     this.wipe();
     this.categories = [];
-    this.log = new Logger();
   }
 
   /**
@@ -33,8 +32,6 @@ module.exports = class Aiml {
    * @param {String} aiml    A whole AIML file
    */
   parseAiml (aiml) {
-    this.log.debug('parsing aiml...');
-
     var xmlDoc = libxmljs.parseXmlString(aiml),
       topics = xmlDoc.find('topic'),
       categories,
@@ -53,7 +50,7 @@ module.exports = class Aiml {
     }
 
     categories = xmlDoc.find('category');
-    this.log.debug('Loading ' + this.categories.length + ' categories.');
+    debug('Parsing ' + this.categories.length + ' categories.');
 
     for (i = 0; i < categories.length; i++) {
       this.categories.push(new Category(categories[i], this.surly));
@@ -67,7 +64,7 @@ module.exports = class Aiml {
    */
   showCategories () {
     for (var i = 0; i < this.categories.length; i++) {
-      this.log.debug(this.categories[i].topic + ' - ' + this.categories[i].pattern.text_pattern);
+      debug(' - ' + this.categories[i].pattern.text_pattern);
     }
   }
 
@@ -121,7 +118,7 @@ module.exports = class Aiml {
   loadDir (dir, callback) {
     var files = fs.readdirSync(dir);
 
-    this.log.debug('Loading dir' + dir);
+    debug('Loading dir' + dir);
 
     for (var i in files) {
       if (!files.hasOwnProperty(i)) continue;
@@ -129,7 +126,7 @@ module.exports = class Aiml {
       var name = dir + '/' + files[i];
 
       if (fs.statSync(name).isDirectory()) {
-        this.log.debug('Ignoring directory: ' + name);
+        debug('Ignoring directory: ' + name);
       } else if (name.substr(-5).toLowerCase() === '.aiml') {
         this.loadFile(name, callback);
       }
@@ -142,7 +139,7 @@ module.exports = class Aiml {
    * @return {Undefined}
    */
   loadFile (file, callback) {
-    this.log.debug('Loading file: ' + file);
+    debug('Loading file: ' + file);
     fs.readFile(file, 'utf8', function (err, xml) {
       if (err) {
         throw 'Failed to load AIML file. ' + err;
@@ -164,7 +161,7 @@ module.exports = class Aiml {
    * @return {[type]}          [description]
    */
   normaliseSentence (sentence) {
-    this.log.debug('normalising ', sentence);
+    debug('normalising ', sentence);
 
     // add spaces to prevent false positives
     if (sentence.charAt(0) !== ' ') {

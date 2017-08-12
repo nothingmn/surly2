@@ -3,7 +3,7 @@
 const Template = require('./Template');
 const Pattern = require('./Pattern');
 const PatternThat = require('./Pattern/That');
-const Logger = require('../Logger');
+const debug = require('debug')('surly2');
 
 /**
  * From AIML Spec
@@ -33,7 +33,6 @@ module.exports = class Category {
   constructor (category, surly, topic) {
     this.topic = topic || '*';
     this.surly = surly;
-    this.log = new Logger();
     var patterns = category.find('pattern');
     var templates = category.find('template');
     var thats = category.find('that');
@@ -77,14 +76,14 @@ module.exports = class Category {
   checkThat (callback) {
     // If no THAT then it matches by default
     if (!this.that) {
-      this.log.debug('No THAT.');
+      debug('No THAT.');
       return callback(true);
     }
 
     this.that.getText(function (err, thatText) {
       var previous = this.surly.environment.getPreviousResponse(1).toUpperCase();
 
-      this.log.debug('Comparing THAT - "' + thatText + '", "' + previous + '"');
+      debug('Comparing THAT - "' + thatText + '", "' + previous + '"');
       callback(thatText === previous);
     }.bind(this));
   }
@@ -103,7 +102,7 @@ module.exports = class Category {
    */
   match (sentence, callback) {
     if (this.pattern.compare(sentence)) {
-      this.log.debug('Matched pattern: ' + sentence + ' -- ' + this.pattern);
+      debug('Matched pattern: ' + sentence + ' -- ' + this.pattern);
 
       if (this.topic !== '*' &&
         this.topic.toUpperCase() !== this.surly.environment.getVariable('topic')) {
@@ -115,7 +114,7 @@ module.exports = class Category {
         callback(matches);
       }.bind(this));
     } else {
-      this.log.debug('No match');
+      debug('No match');
       callback(false);
     }
   }
