@@ -25,11 +25,18 @@ module.exports = class Bot extends BaseNode {
   constructor (node, surly) {
     super(node, surly);
     this.type = 'bot';
-    this.name = node.attr('name').value();
-
-    if (!this.name) {
-      throw "Invalid AIML: Bot tag with no name attribute.";
+    try {
+        this.name = node.attr('name').value();      
+    } catch (error) {
+      // console.log(error);
+      // console.log(node);
+      // console.log(surly);
+      // throw "Invalid AIML: Bot tag with no name attribute.";
     }
+
+    // if (!this.name) {
+    //   throw "Invalid AIML: Bot tag with no name attribute.";
+    // }
   }
 
   getText (callback) {
