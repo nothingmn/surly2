@@ -86,7 +86,7 @@ module.exports = class Aiml {
         var template = category.getTemplate();
         template.getText(callback);
       } else {
-        callback('No match.', 'Fuck knows.');
+        callback('No match.', 'I do not know.');
       }
     }.bind(this));
   }
